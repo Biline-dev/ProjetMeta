@@ -2,8 +2,13 @@ package com.puzzle.heuristic;
 import com.puzzle.algorithm.Heuristic;
 import java.util.ArrayList;
 
-public class ManhattanDistanceHeuristic implements Heuristic {
+/**
+ * This heuristic count the manhattan Distance between the current state to the goal
+ * @author beline
+ *
+ */
 
+public class ManhattanDistanceHeuristic implements Heuristic {
     @Override
     public int getHeuristic(ArrayList<Integer> currentBoard, ArrayList<Integer> targetBoard) {
         int manhattanSum = 0;

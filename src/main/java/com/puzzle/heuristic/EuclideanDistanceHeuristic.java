@@ -2,8 +2,13 @@ package com.puzzle.heuristic;
 import com.puzzle.algorithm.Heuristic;
 import java.util.ArrayList;
 
-public class EuclideanDistanceHeuristic implements Heuristic {
+/**
+ * This heuristic count the  Euclidean Distance between the current state to the goal
+ * @author beline
+ *
+ */
 
+public class EuclideanDistanceHeuristic implements Heuristic {
     @Override
     public int getHeuristic(ArrayList<Integer> currentBoard, ArrayList<Integer> targetBoard) {
         int euclideanSum = 0;
