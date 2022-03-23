@@ -13,13 +13,13 @@ public abstract class Util {
      * directions of the empty state and create children from the current parent
      * state.</p>
      *
-     * @param current grid state just explored
+     * @param current State just explored
      */
     public  void findChildren(State current) {
         int zeroIndex = current.getBoard().indexOf(0);
         /*
-         * Directions are always -3, -1, +1 or +3 in the array of chars in the
-         * String, as we are using a 3x3 grid
+         * Directions are always -3, -1, +1 or +3 in our arrayList
+         * as we are using a 3x3 grid
          */
         this.movement(zeroIndex, 3, current);
         this.movement(zeroIndex, -3, current);
@@ -28,10 +28,10 @@ public abstract class Util {
     }
 
     /**
-     * <p>Using the location of the blank tile and the intended direction,
+     * <p>Using the location of 0 tile and the intended direction,
      * see if it is a legal move to make, or if it would send the tile
-     * out of the bounds of the grid or 'wrap' around from one side
-     * of the grid to another.</p>
+     * out of the bounds of the state or 'wrap' around from one side
+     * of the state to another.</p>
      *
      * @param zeroIndex
      *            - Current location of the empty space
@@ -105,7 +105,7 @@ public abstract class Util {
 
     /**
      * <p>Looks through the given list for the given
-     * GridState and returns either the found GridState
+     * State and returns either the found State
      * if it exists in the list, or null if not.
      * @param state
      * @param list

@@ -9,5 +9,5 @@ import java.util.ArrayList;
  *
  */
 public interface Heuristic {
-    int getHeuristic(ArrayList<Integer> board, ArrayList<Integer> targetBoard );
+    int getHeuristic(ArrayList<Integer> currentBoard, ArrayList<Integer> targetBoard );
 }

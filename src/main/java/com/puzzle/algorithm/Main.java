@@ -1,4 +1,6 @@
 package com.puzzle.algorithm;
+import com.puzzle.heuristic.ManhattanDistanceHeuristic;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -29,7 +31,7 @@ public class Main {
         initialBoard.add(0);
         initialBoard.add(5);
 
-        solution = new AStarSolver(initialBoard, solvedBoard);
+        solution = new AStarSolver(initialBoard, solvedBoard, 1);
         State current =solution.AStar();
         System.out.println("Le parcours: "+solution.getNumberStates());
         current.display();

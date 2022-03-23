@@ -1,5 +1,5 @@
 package com.puzzle.algorithm;
-import com.puzzle.heuristic.MisplacedTilesHeuristic;
+import com.puzzle.heuristic.*;
 
 import java.util.*;
 
@@ -31,15 +31,38 @@ public class AStarSolver extends Util {
      * @param initialBoard
      * @param goal
      */
-    public AStarSolver(ArrayList<Integer> initialBoard, ArrayList<Integer> goal) {
+    public AStarSolver(ArrayList<Integer> initialBoard, ArrayList<Integer> goal, int heuristicMode) {
         this.initialBoard=initialBoard;
         this.target = goal;
-        this.heuristic = new MisplacedTilesHeuristic();
         open = new PriorityQueue<State>();
         open = new PriorityQueue<>();
         closed = new HashSet<>(181440);
+        defineMode(heuristicMode);
     }
 
+    /**
+     * <p>Sets the heuristic to either Manhattan or Tile based.
+     * Updates a String to be used in informing the user of
+     * which heuristic is under use. <br />
+     * Default is Manhattan Distance.
+     * </p>
+     * @param mode
+     */
+    private void defineMode(int mode) {
+        switch (mode) {
+            case (1):
+                heuristic = new ManhattanDistanceHeuristic();
+                break;
+            case (2):
+                heuristic = new MisplacedTilesHeuristic();
+                break;
+            case (3):
+                heuristic = new EuclideanDistanceHeuristic();
+                break;
+            default:
+                heuristic = new ManhattanDistanceHeuristic();
+        }
+    }
 
     public  State AStar(){
         boolean solutionFound = false;

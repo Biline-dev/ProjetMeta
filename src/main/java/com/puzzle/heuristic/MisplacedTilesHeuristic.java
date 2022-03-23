@@ -1,7 +1,5 @@
 package com.puzzle.heuristic;
-
 import com.puzzle.algorithm.Heuristic;
-
 import java.util.ArrayList;
 
     public class MisplacedTilesHeuristic implements Heuristic {
