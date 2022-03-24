@@ -21,7 +21,6 @@ public class AStarSolver extends Util {
     private Set<State>  closed;
     private int numberStates = 0;
 
-
     /**
      * <p>
      * New A* Search creates new lists and sets the goal.
@@ -34,7 +33,6 @@ public class AStarSolver extends Util {
     public AStarSolver(ArrayList<Integer> initialBoard, ArrayList<Integer> goal, int heuristicMode) {
         this.initialBoard=initialBoard;
         this.target = goal;
-        open = new PriorityQueue<State>();
         open = new PriorityQueue<>();
         closed = new HashSet<>(181440);
         defineMode(heuristicMode);
@@ -71,10 +69,8 @@ public class AStarSolver extends Util {
 
         open.add(source);
         while(!open.isEmpty()){
-            source.display();
-            System.out.print("\n");
             State currentState = open.poll();
-
+            currentState.display();
             //add ths state with minimum sumCost to the closed list.
             closed.add(currentState);
             if (currentState.getBoard().equals(target)) {

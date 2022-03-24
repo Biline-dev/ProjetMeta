@@ -100,9 +100,33 @@ public abstract class Util {
         // Calculate the minimum remaining cost to target
         int minimumRemainingCostToTarget = heuristic.getHeuristic(newBoard, target);
         // Return a new 'Child' GridState, using the char array with the moved tiles
-        return new State(newBoard,current,minimumRemainingCostToTarget);
+        return new State(newBoard,current,minimumRemainingCostToTarget, moves(direction));
     }
-
+    /**
+     * <p>Looks through the given list for the given
+     * State and returns either the found State
+     * if it exists in the list, or null if not.
+     * @param direction
+     * @return move
+     */
+    public String moves(int direction){
+        String move = null;
+        switch (direction) {
+            case 1:
+                move="LEFT";
+                break;
+            case -1:
+                move="RIGHT";
+                break;
+            case 3:
+                move="DOWN";
+                break;
+            case -3:
+                move="UP";
+                break;
+        }
+        return move;
+    }
     /**
      * <p>Looks through the given list for the given
      * State and returns either the found State

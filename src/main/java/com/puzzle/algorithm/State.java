@@ -17,13 +17,16 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
     private double totalCostFromStart; //g(x)
     private double minimumRemainingCostToTarget; //h(x)
     private double costSum; //f(x)
+    public String previousMove;
     public State(ArrayList<Integer> board,
                  State<N> predecessor,
-                 double minimumRemainingCostToTarget) {
+                 double minimumRemainingCostToTarget,
+                 String previousMove) {
         this.board = board;
         this.predecessor = predecessor;
         this.totalCostFromStart = predecessor == null ? 0 : predecessor.totalCostFromStart + 1;
         this.minimumRemainingCostToTarget = minimumRemainingCostToTarget;
+        this.previousMove=previousMove;
         calculateCostSum();
     }
 
@@ -43,7 +46,7 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
 
     public double getCostSum() {return costSum;}
     public ArrayList<Integer> getBoard() {return board;}
-
+    public String getPreviousMove(){return previousMove;}
     @Override
     public int compareTo(State<N> nNode) {
         int compare = Double.compare(this.costSum, nNode.costSum);
@@ -66,5 +69,6 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
         for (int i = 0; i < board.size();i++) {
             System.out.print(board.get(i));
         }
+        System.out.println("\n"+getPreviousMove());
     }
 }

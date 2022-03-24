@@ -31,7 +31,7 @@ public class Main {
         initialBoard.add(0);
         initialBoard.add(5);
 
-        solution = new AStarSolver(initialBoard, solvedBoard, 1);
+        solution = new AStarSolver(initialBoard, solvedBoard, 2);
         State current =solution.AStar();
         System.out.println("Le parcours: "+solution.getNumberStates());
         current.display();
