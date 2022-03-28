@@ -10,31 +10,15 @@ public class Main {
     public static AStarSolver solution;
     public static void main(String[] args){
 
-        solvedBoard.add(1);
-        solvedBoard.add(2);
-        solvedBoard.add(3);
-        solvedBoard.add(8);
-        solvedBoard.add(0);
-        solvedBoard.add(4);
-        solvedBoard.add(7);
-        solvedBoard.add(6);
-        solvedBoard.add(5);
+        String initial= "380476215";
+        String goal = "123456780";
+        for(int i=0; i<9;i++){
+            initialBoard.add(Character.getNumericValue(initial.charAt(i)));
+            solvedBoard.add(Character.getNumericValue(goal.charAt(i)));
+        }
 
-
-        initialBoard.add(2);
-        initialBoard.add(8);
-        initialBoard.add(3);
-        initialBoard.add(1);
-        initialBoard.add(6);
-        initialBoard.add(4);
-        initialBoard.add(7);
-        initialBoard.add(0);
-        initialBoard.add(5);
-
-        solution = new AStarSolver(initialBoard, solvedBoard, 2);
-        State current =solution.AStar();
-        System.out.println("Le parcours: "+solution.getNumberStates());
-        current.display();
+        solution = new AStarSolver(initialBoard, solvedBoard, 3);
+        solution.AStar();
 
     }
 }

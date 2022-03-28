@@ -76,7 +76,7 @@ public abstract class Util {
      * @param direction
      *            direction of movement of the empty tile
      * @param heuristic
-                  heuristic used to calculate the minimum Remaining Cost T oTarget
+    heuristic used to calculate the minimum Remaining Cost T oTarget
      * @return the created child State
      */
     protected State createChild(State current,

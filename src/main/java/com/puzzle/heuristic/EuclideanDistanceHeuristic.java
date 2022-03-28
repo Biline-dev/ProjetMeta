@@ -16,15 +16,15 @@ public class EuclideanDistanceHeuristic implements Heuristic {
             int currentBoardValue = currentBoard.get(i);
             int solvedBoardValue = targetBoard.get(i);
             if(currentBoardValue != solvedBoardValue && currentBoardValue != 0)
-                euclideanSum  += calculateEuclideanDistance(currentBoard, i, currentBoardValue);
+                euclideanSum  += calculateEuclideanDistance(targetBoard, i, currentBoardValue);
         }
         return euclideanSum ;
     }
 
-    public static double calculateEuclideanDistance(ArrayList<Integer> currentBoard, int index, int value) {
+    public static double calculateEuclideanDistance(ArrayList<Integer> targetBoard, int index, int value) {
         int currentRow = (index / 3) + 1;
         int currentColumn = (index % 3) + 1;
-        int targetIndex = currentBoard.indexOf(value);
+        int targetIndex = targetBoard.indexOf(value);
         int targetRow = (targetIndex / 3) + 1;
         int targetColumn = (targetIndex % 3) + 1;
 

@@ -47,10 +47,17 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
     public double getCostSum() {return costSum;}
     public ArrayList<Integer> getBoard() {return board;}
     public String getPreviousMove(){return previousMove;}
+    public State<N> getPredecessor() {return predecessor;}
+
     @Override
     public int compareTo(State<N> nNode) {
         int compare = Double.compare(this.costSum, nNode.costSum);
-        if (compare == 0) return 0;
+        if (compare == 0)
+        {
+            int compareH = Double.compare(this.minimumRemainingCostToTarget, nNode.minimumRemainingCostToTarget);
+            if (compareH==0) return 0;
+            else return this.minimumRemainingCostToTarget>nNode.minimumRemainingCostToTarget ? 1:-1;
+        }
         else return this.costSum>nNode.costSum ? 1:-1;
     }
 
@@ -66,9 +73,9 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
     }
 
     public void display(){
+        System.out.println("\n"+getPreviousMove());
         for (int i = 0; i < board.size();i++) {
             System.out.print(board.get(i));
         }
-        System.out.println("\n"+getPreviousMove());
     }
 }

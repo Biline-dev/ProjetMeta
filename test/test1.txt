@@ -1,0 +1,37 @@
+/*
+ String initial= "567408321";
+ String goal = "123804765";
+
+ le plus petit chamin est 30
+ le nombre d'état testé '4019' en utilisant l'heuristique 'Manhattan Distance Heuristic'
+ */
+
+
+ /*
+ String initial= "437102586";
+ String goal = "123456780";
+
+ le plus petit chamin est 18
+ le nombre d'état testé '1073' en utilisant l'heuristique 'Euclidean Distance Heuristic'
+
+ le plus petit chamin est 18
+ le nombre d'état testé '2249' en utilisant l'heuristique 'Misplaced Tiles Heuristic '
+
+ le plus petit chamin est 18
+ le nombre d'état testé '367' en utilisant l'heuristique 'Manhattan Distance Heuristic'
+ */
+
+
+ /*
+String initial= "380476215";
+String goal = "123456780";
+
+le plus petit chamin est 22
+le nombre d'état testé '887' en utilisant l'heuristique 'Manhattan Distance Heuristic'
+
+le plus petit chamin est 22
+le nombre d'état testé '9630' en utilisant l'heuristique 'Misplaced Tiles Heuristic '
+
+le plus petit chamin est 22
+le nombre d'état testé '2829' en utilisant l'heuristique 'Euclidean Distance Heuristic'
+ */

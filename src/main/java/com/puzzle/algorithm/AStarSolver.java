@@ -19,8 +19,10 @@ public class AStarSolver extends Util {
     private Heuristic heuristic;
     private PriorityQueue<State> open;
     private Set<State>  closed;
+    private ArrayList<State> path;
+    private String mode;
+    private int shortest_path=0;
     private int numberStates = 0;
-
     /**
      * <p>
      * New A* Search creates new lists and sets the goal.
@@ -35,6 +37,7 @@ public class AStarSolver extends Util {
         this.target = goal;
         open = new PriorityQueue<>();
         closed = new HashSet<>(181440);
+        path = new ArrayList<>();
         defineMode(heuristicMode);
     }
 
@@ -50,51 +53,67 @@ public class AStarSolver extends Util {
         switch (mode) {
             case (1):
                 heuristic = new ManhattanDistanceHeuristic();
+                this.mode="Manhattan Distance Heuristic";
                 break;
             case (2):
                 heuristic = new MisplacedTilesHeuristic();
+                this.mode="Misplaced Tiles Heuristic ";
                 break;
             case (3):
                 heuristic = new EuclideanDistanceHeuristic();
+                this.mode="Euclidean Distance Heuristic";
                 break;
             default:
                 heuristic = new ManhattanDistanceHeuristic();
         }
     }
 
-    public  State AStar(){
+    public  ArrayList<State> AStar(){
         boolean solutionFound = false;
         int minimumRemainingCostToTarget= heuristic.getHeuristic(initialBoard, target);
         State source = new State( initialBoard,null,0, minimumRemainingCostToTarget);
-
         open.add(source);
-        while(!open.isEmpty()){
-            State currentState = open.poll();
-            currentState.display();
-            //add ths state with minimum sumCost to the closed list.
-            closed.add(currentState);
-            if (currentState.getBoard().equals(target)) {
-                return currentState;
-            }
-            numberStates++;
+        int j=0;
 
-            //remove it from the open list and add it to the closed list.
-            this.removeFromOpen(currentState);
+        while(!open.isEmpty()){
+
+            State currentState = open.peek();
+            if (currentState.getBoard().equals(target)) {
+                System.out.println(currentState.getPreviousMove()+" "+currentState.getBoard());
+                path.add(currentState);
+
+                //display states
+                while(currentState.getPredecessor()!=null){
+                    System.out.println(currentState.getPreviousMove()+" "+currentState.getPredecessor().getBoard());
+                    currentState=currentState.getPredecessor();
+                    path.add(currentState);
+                    shortest_path++;
+                }
+                System.out.println("\n le plus petit chamin est "+shortest_path);
+                System.out.println("\n le nombre d'état testé '"+numberStates+"' en utilisant l'heuristique '"+this.mode+"'");
+                return path;
+            }
+            open.remove(currentState);
+            closed.add(currentState);
+            numberStates++;
             /*
              * Search through possible steps (Up, left, right, down) of empty
              * tiles and find the current state's children to be explored next
              */
+
+
             this.findChildren(currentState);
+            //j++;
         }
-            /*
-            * If by the end of this while loop, no solution has been found, inform
-            * the user
-            */
+        /*
+         * If by the end of this while loop, no solution has been found, inform
+         * the user
+         */
 
         if (!solutionFound) {
             System.out.println("No solution for this puzzle");
         }
-        return null;
+        return  null;
     }
 
     @Override
@@ -107,7 +126,7 @@ public class AStarSolver extends Util {
              * explored it at all yet, so add to the open list.
              */
             if(!inClosedList(child) && !inOpenList(child)){
-                this.addToOpen(child);
+                open.add(child);
             }else{
                 State checker = inList(child, open);
                 /*
@@ -143,5 +162,4 @@ public class AStarSolver extends Util {
     public void addToClosed(State state) {closed.add(state);}
     public boolean inClosedList(State state) {return closed.contains(state);}
     public void removeFromClosed(State state) {closed.remove(state);}
-    public int getNumberStates(){return this.numberStates=numberStates;}
 }
