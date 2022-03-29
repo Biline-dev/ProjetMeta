@@ -17,7 +17,7 @@ public class Main {
             solvedBoard.add(Character.getNumericValue(goal.charAt(i)));
         }
 
-        solution = new AStarSolver(initialBoard, solvedBoard, 2);
+        solution = new AStarSolver(initialBoard, solvedBoard, 1);
         solution.AStar();
 
     }

@@ -19,7 +19,7 @@ public class AStarSolver extends Util {
     private Heuristic heuristic;
     private PriorityQueue<State> open;
     private Set<State>  closed;
-    private ArrayList<State> path;
+    private Stack<String> path;
     private String mode;
     private int shortest_path=0;
     private int numberStates = 0;
@@ -37,7 +37,7 @@ public class AStarSolver extends Util {
         this.target = goal;
         open = new PriorityQueue<>();
         closed = new HashSet<>(181440);
-        path = new ArrayList<>();
+        path = new Stack<>();
         defineMode(heuristicMode);
     }
 
@@ -68,7 +68,7 @@ public class AStarSolver extends Util {
         }
     }
 
-    public  ArrayList<State> AStar(){
+    public  Stack<String> AStar(){
         boolean solutionFound = false;
         int minimumRemainingCostToTarget= heuristic.getHeuristic(initialBoard, target);
         State source = new State( initialBoard,null,0, minimumRemainingCostToTarget);
@@ -79,18 +79,13 @@ public class AStarSolver extends Util {
 
             State currentState = open.peek();
             if (currentState.getBoard().equals(target)) {
-                System.out.println(currentState.getPreviousMove()+" "+currentState.getBoard());
-                path.add(currentState);
-
-                //display states
+                path.add(currentState.getNextMove());
                 while(currentState.getPredecessor()!=null){
-                    System.out.println(currentState.getPreviousMove()+" "+currentState.getPredecessor().getBoard());
                     currentState=currentState.getPredecessor();
-                    path.add(currentState);
+                    path.add(currentState.getNextMove());
                     shortest_path++;
                 }
-                System.out.println("\n le plus petit chamin est "+shortest_path);
-                System.out.println("\n le nombre d'état testé '"+numberStates+"' en utilisant l'heuristique '"+this.mode+"'");
+                System.out.println("je suis une pile :"+path);
                 return path;
             }
             open.remove(currentState);
@@ -100,8 +95,6 @@ public class AStarSolver extends Util {
              * Search through possible steps (Up, left, right, down) of empty
              * tiles and find the current state's children to be explored next
              */
-
-
             this.findChildren(currentState);
             //j++;
         }

@@ -63,5 +63,18 @@ le nombre d'état testé '22060' en utilisant l'heuristique 'Euclidean Distance 
 
 le plus petit chamin est 26
 le nombre d'état testé '69937' en utilisant l'heuristique 'Misplaced Tiles Heuristic '
-
  */
+
+ /*
+String initial= "152703846";
+String goal = "123456780";
+
+le plus petit chamin est 8
+le nombre d'état testé '12' en utilisant l'heuristique 'Euclidean Distance Heuristic'
+
+le plus petit chamin est 8
+le nombre d'état testé '15' en utilisant l'heuristique 'Misplaced Tiles Heuristic '
+
+le plus petit chamin est 8
+le nombre d'état testé '12' en utilisant l'heuristique 'Euclidean Distance Heuristic'
+*/

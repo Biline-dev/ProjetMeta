@@ -113,10 +113,10 @@ public abstract class Util {
         String move = null;
         switch (direction) {
             case 1:
-                move="LEFT";
+                move="RIGHT";
                 break;
             case -1:
-                move="RIGHT";
+                move="LEFT";
                 break;
             case 3:
                 move="DOWN";
