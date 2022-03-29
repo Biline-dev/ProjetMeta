@@ -10,14 +10,14 @@ public class Main {
     public static AStarSolver solution;
     public static void main(String[] args){
 
-        String initial= "380476215";
+        String initial= "157624083";
         String goal = "123456780";
         for(int i=0; i<9;i++){
             initialBoard.add(Character.getNumericValue(initial.charAt(i)));
             solvedBoard.add(Character.getNumericValue(goal.charAt(i)));
         }
 
-        solution = new AStarSolver(initialBoard, solvedBoard, 3);
+        solution = new AStarSolver(initialBoard, solvedBoard, 2);
         solution.AStar();
 
     }
