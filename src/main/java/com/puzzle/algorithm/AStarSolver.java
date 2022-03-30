@@ -70,6 +70,13 @@ public class AStarSolver extends Util {
         }
     }
 
+    /**
+     * Astar() function initialize the fist state and add it to open, it'll take the minimum  value in open
+     * and will compare it to the goal, if the path exist the function will return the result containing
+     * all moves to reach the goal, number of all nodes explored, all nodes developed, and the shortest path to
+     * the goal
+     * @return Result
+     */
     public  Result AStar(){
         boolean solutionFound = false;
         int minimumRemainingCostToTarget= heuristic.getHeuristic(initialBoard, target);
@@ -81,6 +88,11 @@ public class AStarSolver extends Util {
             State currentState = open.peek();
             if (currentState.getBoard().equals(target)) {
                 path.add(currentState.getNextMove());
+
+                /*
+                 * on utilise les etats précedents pour le chemin le plus court, on utilise un pile, pour avoir
+                 * le bon ordre à la sortie des éléments
+                 */
                 while(currentState.getPredecessor()!=null){
                     currentState=currentState.getPredecessor();
                     path.add(currentState.getNextMove());
@@ -90,6 +102,10 @@ public class AStarSolver extends Util {
                 result.display();
                 return result;
             }
+
+            /*
+            * remove the state with the minimum cosSum and put it in closed list
+             */
             open.remove(currentState);
             closed.add(currentState);
             numberOfDevelopedNodes++;
