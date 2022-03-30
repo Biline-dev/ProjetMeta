@@ -14,7 +14,7 @@ public class DFS {
     private ArrayList<Node> allSolutionsList = new ArrayList<Node>();
 
 //constructor
-public DFS(int start[][], int goal[][]) {
+public DFS(ArrayList <Integer> start, ArrayList <Integer> goal) {
     startState = new Node(start, null,0);
     goalState = new Node(goal, null,0);
     stackOpen.push(startState);
@@ -34,7 +34,7 @@ private void succesor(Node currentState) {
     }	
     
     //droite
-    newState = p.moveRight(currentState);
+   newState = p.moveRight(currentState);
     if (newState != null) {
     	if(goalState.equal(newState)) allSolutionsList.add(newState);
     	else stackOpen.push(newState);	
@@ -97,6 +97,7 @@ catch (Exception e) {
 
 //affichage des solutions si on a trouvé au moins une 
 if (allSolutionsList.size() !=0) affichage_success(); 
+else System.out.println("aucune solution trouvée");
 System.out.println("nombre d'étapes : " + moveCounter);
 }
 
