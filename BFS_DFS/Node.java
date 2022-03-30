@@ -1,10 +1,12 @@
 package work;
 
+import java.util.ArrayList;
 
 public class Node {
-	private int state[][] = new int[3][3];
+	private int stateNumber;
 	private Node predecessor = null;
 	private int depth = 0;
+	private ArrayList <Integer> stateList;
 
 //constructeurs
 //1
@@ -12,69 +14,35 @@ public Node() {
 }
 
 //2
-public Node(int state[][], Node predecessor, int depth) {
-   this.state = state;
+public Node(ArrayList <Integer> stateList, Node predecessor, int depth) {
+   this.stateList = stateList;
    this.predecessor = predecessor;
    this.depth = depth;
+   this.intFromList();
+}
+
+//cette méthode retourne stateNumber à partir de stateList
+public void intFromList() {
+	int i = 1;
+	this.stateNumber = 0;
+	for(int num: this.stateList) {
+		this.stateNumber += i*num;
+		i *=10;
+	}
 }
 
 //setters & getters
-public int getNum(int posX, int posY) {
-   return state[posX][posY];
+public int getNum(int pos) {
+   return stateList.get(pos);
 }
 
-public void setNum(int x, int y, int num) {
-   state[x][y] = num;
+public void setNum(int pos, int num) {
+   stateList.set(pos, num);
+   this.intFromList();
 }
 
-public int getX(int num) {
-int positionX = 0;
-for (int x = 0; x < 3; x++) {
-    for (int y = 0; y < 3; y++) {
-        if (state[x][y] == num) {
-            positionX = x;
-            break;
-        }
-    }
-}
-    return positionX;
-}
-
-public int getY(int num) {
-int positionY = 0;
-for (int x = 0; x < 3; x++) {
-    for (int y = 0; y < 3; y++) {
-        if (state[x][y] == num) {
-            positionY = y;
-            break;
-        }
-    }
-}
-
-    return positionY;
-}
-
-//getX + getY
-public int[] getCoordinate(int num) {
-	int coordinate[] = new int[2];
-    for (int x = 0; x < 3; x++) {
-        for (int y = 0; y < 3; y++) {
-            if (state[x][y] == num) {
-                coordinate[0] = x;
-                coordinate[1] = y;
-                break;
-            }
-        }
-    }
-    return coordinate;
-}
-
-public int[][] getState() {
-	return state;
-}
-
-public void setState(int[][] state) {
-	this.state = state;
+public int getPos(int num) {
+ return this.stateList.indexOf(num);
 }
 
 public Node getPredecessor() {
@@ -93,38 +61,45 @@ public void setDepth(int depth) {
 	this.depth = depth;
 }
 
+public int getStateNumber() {
+	return stateNumber;
+}
+
+public void setStateNumber(int stateNumber) {
+	this.stateNumber = stateNumber;
+}
+
+public ArrayList<Integer> getStateList() {
+	return stateList;
+}
+
+public void setStateList(ArrayList<Integer> stateList) {
+	this.stateList = stateList;
+	intFromList();
+}
+
 //méthode pour affecter le contenu du noeud à un ature
-public int[][] affectState() {
-	int newState[][] = new int[3][3];
-	for(int i=0;i<3;i++) {
-		for(int j=0;j<3;j++) {
-			newState[i][j]=this.state[i][j];
-		}
+public ArrayList<Integer> affectState() {
+	ArrayList<Integer> newState = new ArrayList<Integer>();
+	for(int i=0;i<9;i++) {
+		newState.add(this.stateList.get(i));
 	}
 	return newState;
 }
 
 //méthodes pour vérifier si deux noeud sont égaux en se basant sur leurs contenus
 public boolean equal(Node n) {
-	int i = 0;
-	int j = 0;
-	while (i<3 && j<3) {
-		if(this.state[i][j] != n.state[i][j]) {
-			return false;
-		}
-		i++;
-		j++;
-	}
-	return true;
+return this.stateNumber == n.getStateNumber();
 }
 
 //méthode toString
 public String toString() {
  String output = "";
-
+ int pos = 0;
  for (int x = 0; x < 3; x++) {
      for (int y = 0; y < 3; y++) {
-         output += state[x][y];
+         output += stateList.get(pos)+" ";
+         pos ++;
      }
      output += "\n";
  }

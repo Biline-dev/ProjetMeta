@@ -14,7 +14,7 @@ public class BFS {
     private int maxiter = 1000;
 
 //constructor
-public BFS(int start[][], int goal[][]) {
+public BFS(ArrayList <Integer> start, ArrayList <Integer> goal) {
     startState = new Node(start, null,0);
     goalState = new Node(goal, null,0);
     fileOpen.add(startState);
@@ -51,7 +51,7 @@ private void succesor(Node currentState) {
     newState = p.moveLeft(currentState);
     if (newState != null) {
     	if(goalState.equal(newState)) allSolutionsList.add(newState);
-    	else fileOpen.add(newState);
+    	else fileOpen.add(newState); 
     }
 }
 
@@ -92,6 +92,7 @@ while (iter < maxiter) {
 
 //affichage des solutions si on a trouvé au moins une 
 if (allSolutionsList.size() !=0) affichage_success(); 
+else System.out.println("aucune solution trouvée");
 System.out.println("nombre d'étapes : " + moveCounter);
 }
 
