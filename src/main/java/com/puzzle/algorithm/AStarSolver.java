@@ -21,8 +21,10 @@ public class AStarSolver extends Util {
     private Set<State>  closed;
     private Stack<String> path;
     private String mode;
-    private int shortest_path=0;
-    private int numberStates = 0;
+    private Result result;
+    private int shortestPath=0;
+    private int numberOfExploredNodes=1;
+    private int  numberOfDevelopedNodes=1;
     /**
      * <p>
      * New A* Search creates new lists and sets the goal.
@@ -42,7 +44,7 @@ public class AStarSolver extends Util {
     }
 
     /**
-     * <p>Sets the heuristic to either Manhattan or Tile based.
+     * <p>Sets the heuristic to Manhattan, misplaced tiles or euclidean distance.
      * Updates a String to be used in informing the user of
      * which heuristic is under use. <br />
      * Default is Manhattan Distance.
@@ -68,7 +70,7 @@ public class AStarSolver extends Util {
         }
     }
 
-    public  Stack<String> AStar(){
+    public  Result AStar(){
         boolean solutionFound = false;
         int minimumRemainingCostToTarget= heuristic.getHeuristic(initialBoard, target);
         State source = new State( initialBoard,null,0, minimumRemainingCostToTarget);
@@ -76,33 +78,31 @@ public class AStarSolver extends Util {
         int j=0;
 
         while(!open.isEmpty()){
-
             State currentState = open.peek();
             if (currentState.getBoard().equals(target)) {
                 path.add(currentState.getNextMove());
                 while(currentState.getPredecessor()!=null){
                     currentState=currentState.getPredecessor();
                     path.add(currentState.getNextMove());
-                    shortest_path++;
+                    shortestPath++;
                 }
-                System.out.println("je suis une pile :"+path);
-                return path;
+                result = new Result(path, numberOfExploredNodes,numberOfDevelopedNodes,shortestPath);
+                result.display();
+                return result;
             }
             open.remove(currentState);
             closed.add(currentState);
-            numberStates++;
+            numberOfDevelopedNodes++;
             /*
              * Search through possible steps (Up, left, right, down) of empty
              * tiles and find the current state's children to be explored next
              */
             this.findChildren(currentState);
-            //j++;
         }
         /*
          * If by the end of this while loop, no solution has been found, inform
          * the user
          */
-
         if (!solutionFound) {
             System.out.println("No solution for this puzzle");
         }
@@ -120,6 +120,7 @@ public class AStarSolver extends Util {
              */
             if(!inClosedList(child) && !inOpenList(child)){
                 open.add(child);
+                numberOfExploredNodes++;
             }else{
                 State checker = inList(child, open);
                 /*
