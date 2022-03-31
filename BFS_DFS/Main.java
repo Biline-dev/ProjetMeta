@@ -14,11 +14,9 @@ public class Main {
 	ArrayList <Integer> startState = new ArrayList<Integer>(Arrays.asList(2, 8, 3, 1, 6, 4, 7, 0, 5));
 	ArrayList <Integer> goalState = new ArrayList <Integer>(Arrays.asList(1, 2, 3, 8, 0, 4, 7, 6, 5));
 		
-
-
-     BFS bfs = new BFS(startState, goalState);
+    BFS bfs = new BFS(startState, goalState, 5000);
     bfs.search();
-    DFS dfs = new DFS(startState, goalState);
+    DFS dfs = new DFS(startState, goalState, 4);
     dfs.search(); 	
 }
 }
