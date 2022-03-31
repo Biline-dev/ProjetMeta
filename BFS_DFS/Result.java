@@ -17,7 +17,6 @@ public class Result {
         this.numberOfExploredNodes = numberOfExploredNodes;
         this.numberOfDevelopedNodes = numberOfDevelopedNodes;
         this.shortestPath = shortestPath;
-        this.display();
     }
 
     public Stack<String> getMovesForTheShortestPath() {return movesForTheShortestPath;}
