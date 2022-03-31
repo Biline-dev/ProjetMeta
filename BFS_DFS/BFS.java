@@ -6,18 +6,20 @@ import java.util.Set;
 import java.util.Stack;
 
 public class BFS {
-    private int moveCounter = 0;
     private Node startState, goalState, currentState = new Node();
     private ArrayList<Node> fileClosed = new ArrayList<Node>();
     private ArrayList<Node> fileOpen = new ArrayList<Node>();
-    private ArrayList<Node> allSolutionsList = new ArrayList<Node>();
-    private int maxiter = 1000;
+    private int maxIter = 1000;
+    private int numberOfExploredNodes = 1;
+    private int  numberOfDevelopedNodes = 1;
+    private boolean found = false;
 
 //constructor
-public BFS(ArrayList <Integer> start, ArrayList <Integer> goal) {
-    startState = new Node(start, null,0);
-    goalState = new Node(goal, null,0);
+public BFS(ArrayList <Integer> start, ArrayList <Integer> goal, int maxIter) {
+    startState = new Node(start, null,0, "start");
+    goalState = new Node(goal, null,0, "end");
     fileOpen.add(startState);
+    this.maxIter = maxIter;
 }
 
 //les méthodes
@@ -29,45 +31,57 @@ private void succesor(Node currentState) {
     //haut
     newState = p.moveUp(currentState);
     if (newState != null) {
-    if(goalState.equal(newState)) allSolutionsList.add(newState);
-     else fileOpen.add(newState);
+    if(goalState.equal(newState)) found = true;
+     else {
+    	 fileOpen.add(newState);
+    	 numberOfExploredNodes ++;
+     }
     }	
     
     //droite
     newState = p.moveRight(currentState);
     if (newState != null) {
-    	if(goalState.equal(newState)) allSolutionsList.add(newState);
-    	else fileOpen.add(newState);	
+    	if(goalState.equal(newState)) found = true;
+    	else {
+    		fileOpen.add(newState);	
+    		 numberOfExploredNodes ++;
+    	}
     }
   
    //bas  
     newState = p.moveDown(currentState);
     if (newState != null) {
-    	if(goalState.equal(newState)) allSolutionsList.add(newState);
-    	else fileOpen.add(newState);	
+    	if(goalState.equal(newState)) found = true;
+    	else {
+    		fileOpen.add(newState);	
+    		numberOfExploredNodes ++;
+    	}
     }
   
     //gauche
     newState = p.moveLeft(currentState);
     if (newState != null) {
-    	if(goalState.equal(newState)) allSolutionsList.add(newState);
-    	else fileOpen.add(newState); 
+    	if(goalState.equal(newState)) found = true;
+    	else {
+    		fileOpen.add(newState); 
+    		numberOfExploredNodes ++;
+    	}
     }
 }
 
 //la méthode search 
-public void search() {
+public Result search() {
   boolean exist = false;
   Node tmpNode = new Node();
   currentState = fileOpen.remove(0);
   fileClosed.add(currentState);
   succesor(currentState);
- int iter = 0;
-while (iter < maxiter) {
+  int iter = 0;
+while (iter < maxIter && !found) {
 	iter++;	
 	
  if(!fileOpen.isEmpty()) {
-  currentState = fileOpen.remove(0);	
+  currentState = fileOpen.remove(0);
 //parcourir la file et vérifier si l'élément qu'on veut développer n'existe pas ds la liste
  for (int i = 0; i < fileClosed.size(); i++) {
     tmpNode = fileClosed.get(i);
@@ -80,7 +94,7 @@ while (iter < maxiter) {
  if (!exist) {
 	fileClosed.add(currentState);
 	succesor(currentState);
-    moveCounter++;
+	numberOfDevelopedNodes++;
  }
  }
 //une exception sera élevée quand la pile ne contient plus de noeuds 
@@ -90,46 +104,16 @@ while (iter < maxiter) {
     }
 }
 
-//affichage des solutions si on a trouvé au moins une 
-if (allSolutionsList.size() !=0) affichage_success(); 
-else System.out.println("aucune solution trouvée");
-System.out.println("nombre d'étapes : " + moveCounter);
+//retourner le résultat si on a trouvé une solution
+if (found) {
+Stack<String> movesForTheShortestPath =  new Stack<String>(); 
+Node state = currentState;
+	do {
+		movesForTheShortestPath.push(state.getMove());
+		state = state.getPredecessor();	 
+	}while(state !=null); 
+return new Result(movesForTheShortestPath, numberOfExploredNodes, numberOfDevelopedNodes, movesForTheShortestPath.size());
 }
-
-//la méthode d'affichage des solutions étape par étape
-public void affichage_success() {
-	System.out.println("les solutions trouvées par BFS : ");
-	//ce hashset nous permet de vérifier si notre algorithme a généré deux solutions identiques
-	Set<ArrayList<Node>> hashSet = new HashSet<ArrayList<Node>>();
-	int step ,i, numSol=0;
-	ArrayList<Node> solution = new ArrayList<Node>();
-	for(Node state : allSolutionsList) {
-		solution.clear();
-		do {
-			solution.add(state);
-			state = state.getPredecessor();
-		}while(state !=null);
-		
-		//si la fonction add du hashset nous retourne faux , cela veut dire que la solution existe déjà
-		if(!hashSet.add(solution)) {
-			System.out.println("la solution existe déjà , bad algorithm :((");
-			break;
-		}
-		else {
-		//l'affichage de la solution
-			System.out.println("solution n° : "+numSol);
-			numSol++;
-			step = 0;
-			i = solution.size()-1;
-			while(i>=0) {
-				System.out.println("step"+step+" : \n"+solution.get(i));
-				i--;
-				step++;		
-		}
-	}
-	System.out.println("-------------------------------");		
-	}
+else return null;
 }
-
-
 }
