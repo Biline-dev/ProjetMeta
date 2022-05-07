@@ -6,6 +6,7 @@ public class Node {
 	private int stateNumber;
 	private Node predecessor = null;
 	private int depth = 0;
+	private String move;
 	private ArrayList <Integer> stateList;
 
 //constructeurs
@@ -14,10 +15,11 @@ public Node() {
 }
 
 //2
-public Node(ArrayList <Integer> stateList, Node predecessor, int depth) {
+public Node(ArrayList <Integer> stateList, Node predecessor, int depth, String move) {
    this.stateList = stateList;
    this.predecessor = predecessor;
    this.depth = depth;
+   this.move = move;
    this.intFromList();
 }
 
@@ -73,6 +75,14 @@ public ArrayList<Integer> getStateList() {
 	return stateList;
 }
 
+public String getMove() {
+	return move;
+}
+
+public void setMove(String move) {
+	this.move = move;
+}
+
 public void setStateList(ArrayList<Integer> stateList) {
 	this.stateList = stateList;
 	intFromList();
@@ -94,7 +104,7 @@ return this.stateNumber == n.getStateNumber();
 
 //méthode toString
 public String toString() {
- String output = "";
+ String output = this.move+"\n";
  int pos = 0;
  for (int x = 0; x < 3; x++) {
      for (int y = 0; y < 3; y++) {

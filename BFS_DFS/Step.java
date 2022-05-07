@@ -15,6 +15,7 @@ public Node moveUp(Node currentState) {
     	newState.setStateList(currentState.affectState());  
     	newState.setDepth(currentState.getDepth()+1);
     	newState.setPredecessor(currentState);
+    	newState.setMove("UP");
     	//inverser les deux cases
         int temp = newState.getNum(emptyPosition - 3);
         newState.setNum(emptyPosition, temp);
@@ -31,6 +32,7 @@ public Node moveRight(Node currentState) {
     	newState.setStateList(currentState.affectState());
     	newState.setDepth(currentState.getDepth()+1);
     	newState.setPredecessor(currentState);
+    	newState.setMove("RIGHT");
     	//inverser les deux cases
         int temp = newState.getNum(emptyPosition + 1);
         newState.setNum(emptyPosition, temp);
@@ -47,6 +49,7 @@ public Node moveDown(Node currentState) {
     	newState.setStateList(currentState.affectState());
     	newState.setDepth(currentState.getDepth()+1);
     	newState.setPredecessor(currentState);
+    	newState.setMove("DOWN");
     	//inverser les deux cases
         int temp = newState.getNum(emptyPosition + 3);
         newState.setNum(emptyPosition, temp);
@@ -63,6 +66,7 @@ public Node moveLeft(Node currentState) {
     	newState.setStateList(currentState.affectState());
     	newState.setDepth(currentState.getDepth() + 1);
     	newState.setPredecessor(currentState);
+    	newState.setMove("LEFT");
     	//inverser les deux cases
         int temp = newState.getNum(emptyPosition - 1);
         newState.setNum(emptyPosition, temp);
