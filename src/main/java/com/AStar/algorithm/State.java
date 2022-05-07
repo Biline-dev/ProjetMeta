@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class State<N extends Comparable<N>> implements Comparable<State<N>> {
 
     private  ArrayList<Integer> board;
+    private Integer intBoard;
     private State<N> predecessor;
     private double totalCostFromStart; //g(x)
     private double minimumRemainingCostToTarget; //h(x)
@@ -28,6 +29,7 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
         this.minimumRemainingCostToTarget = minimumRemainingCostToTarget;
         this.nextMove=nextMove;
         calculateCostSum();
+        this.intFromList();
     }
 
     public State(ArrayList<Integer> board,
@@ -39,6 +41,7 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
         this.totalCostFromStart = totalCostFromStart;
         this.minimumRemainingCostToTarget = minimumRemainingCostToTarget;
         calculateCostSum();
+        this.intFromList();
     }
     private void calculateCostSum() {
         this.costSum = this.totalCostFromStart + this.minimumRemainingCostToTarget;
@@ -48,6 +51,8 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
     public ArrayList<Integer> getBoard() {return board;}
     public String getNextMove(){return nextMove;}
     public State<N> getPredecessor() {return predecessor;}
+    public Integer getIntBoard() {return intBoard;}
+
 
     @Override
     public int compareTo(State<N> nNode) {
@@ -61,11 +66,22 @@ public class State<N extends Comparable<N>> implements Comparable<State<N>> {
         else return this.costSum>nNode.costSum ? 1:-1;
     }
 
+
+    //cette méthode retourne stateNumber à partir de stateList
+    public void intFromList() {
+        int i = 1;
+        this.intBoard=0;
+        for(int num: this.board) {
+            this.intBoard += i*num;
+            i *=10;
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         State testState = (State) obj;
-        ArrayList test = testState.getBoard();
-        if (test.equals(board)) {
+        Integer test = testState.getIntBoard();
+        if (test.equals(this.intBoard)) {
             return true;
         } else {
             return false;

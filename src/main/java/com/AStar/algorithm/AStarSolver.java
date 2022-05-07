@@ -1,6 +1,8 @@
 package com.puzzle.algorithm;
 import com.puzzle.heuristic.*;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -77,7 +79,8 @@ public class AStarSolver extends Util {
      * the goal
      * @return Result
      */
-    public  Result AStar(){
+    public  Result AStar() throws IOException {
+        FileWriter myWriter = new FileWriter("tests.txt");
         boolean solutionFound = false;
         int minimumRemainingCostToTarget= heuristic.getHeuristic(initialBoard, target);
         State source = new State( initialBoard,null,0, minimumRemainingCostToTarget);
@@ -99,7 +102,9 @@ public class AStarSolver extends Util {
                     shortestPath++;
                 }
                 result = new Result(path, numberOfExploredNodes,numberOfDevelopedNodes,shortestPath);
-                result.display();
+                System.out.println(result.display());
+                myWriter.write("/* "+result.display()+"*/");
+
                 return result;
             }
 

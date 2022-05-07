@@ -1,24 +1,26 @@
-package com.puzzle.algorithm;
-import com.puzzle.heuristic.ManhattanDistanceHeuristic;
-
+package Resolution.PSO;
 import java.util.ArrayList;
 
 public class Main {
 
     public static ArrayList<Integer> solvedBoard = new ArrayList<>();
     public static ArrayList<Integer> initialBoard = new ArrayList<>();
-    public static AStarSolver solution;
+    public static AlgoPSO solution;
     public static void main(String[] args){
 
-        String initial= "157624083";
+        String initial= "412608573";
         String goal = "123456780";
         for(int i=0; i<9;i++){
             initialBoard.add(Character.getNumericValue(initial.charAt(i)));
             solvedBoard.add(Character.getNumericValue(goal.charAt(i)));
         }
 
-        solution = new AStarSolver(initialBoard, solvedBoard, 1);
-        solution.AStar();
+        solution = new AlgoPSO( initialBoard,
+                                solvedBoard,
+                                2, 2, 2, 1,
+                                30000,
+                                100);
+        solution.PSO();
 
     }
 }
