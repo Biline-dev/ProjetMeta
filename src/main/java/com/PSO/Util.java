@@ -1,4 +1,4 @@
-package Resolution.PSO;
+package com.PSO;
 import java.util.*;
 
 public abstract class Util {

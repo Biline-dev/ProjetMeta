@@ -1,9 +1,9 @@
-package Resolution.PSO;
+package com.PSO;
 
-import com.AStar.EuclideanDistanceHeuristic;
-import com.AStar.ManhattanDistanceHeuristic;
-import com.AStar.MisplacedTilesHeuristic;
-import Resolution.Result;
+import com.AStar.heuristic.EuclideanDistanceHeuristic;
+import com.AStar.heuristic.ManhattanDistanceHeuristic;
+import com.AStar.heuristic.MisplacedTilesHeuristic;
+import com.Result;
 import java.util.*;
 
 public class AlgoPSO extends Util {

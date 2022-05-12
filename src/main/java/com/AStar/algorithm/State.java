@@ -1,4 +1,4 @@
-package com.puzzle.algorithm;
+package com.AStar.algorithm;
 import java.util.ArrayList;
 
 /**

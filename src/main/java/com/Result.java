@@ -1,8 +1,8 @@
-package work;
-
+package com;
 import java.util.Stack;
 
 public class Result {
+
     private Stack<String> movesForTheShortestPath;
     private int numberOfExploredNodes;
     private int  numberOfDevelopedNodes;
@@ -16,7 +16,11 @@ public class Result {
         this.movesForTheShortestPath = movesForTheShortestPath;
         this.numberOfExploredNodes = numberOfExploredNodes;
         this.numberOfDevelopedNodes = numberOfDevelopedNodes;
-        this.shortestPath = shortestPath;
+        this.shortestPath= shortestPath;
+    }
+
+    public Result(Stack<String> path) {
+        this.movesForTheShortestPath=path;
     }
 
     public Stack<String> getMovesForTheShortestPath() {return movesForTheShortestPath;}
@@ -24,10 +28,11 @@ public class Result {
     public int getNumberOfDevelopedNodes() {return numberOfDevelopedNodes;}
     public int getShortestPath() {return shortestPath;}
 
-    public void display(){
-        System.out.println(" moves are: "+this.getMovesForTheShortestPath());
-        System.out.println("the number of explored nodes: "+this.getNumberOfExploredNodes());
-        System.out.println("the number of developed nodes: "+this.getNumberOfDevelopedNodes());
-        System.out.println("the shortest path to reach the goal: "+this.getShortestPath());
+    public String display(){
+
+        return " moves are: "+this.movesForTheShortestPath+"\n"+
+                "the number of explored nodes: "+this.getNumberOfExploredNodes()+"\n"+
+                "the number of developed nodes: "+this.getNumberOfDevelopedNodes()+"\n"+
+                "the shortest path to reach the goal: "+this.getShortestPath();
     }
 }

@@ -1,5 +1,9 @@
-package com.puzzle.algorithm;
-import com.puzzle.heuristic.*;
+package com.AStar.algorithm;
+
+import com.AStar.heuristic.EuclideanDistanceHeuristic;
+import com.AStar.heuristic.ManhattanDistanceHeuristic;
+import com.AStar.heuristic.MisplacedTilesHeuristic;
+import com.Result;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -170,7 +174,6 @@ public class AStarSolver extends Util {
             }
         }
     }
-
     public void addToOpen(State state) {open.add(state);}
     public boolean inOpenList(State state) {return open.contains(state);}
     public void removeFromOpen(State state) {open.remove(state);}

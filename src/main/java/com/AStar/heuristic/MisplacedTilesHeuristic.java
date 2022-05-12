@@ -1,5 +1,6 @@
-package com.puzzle.heuristic;
-import com.puzzle.algorithm.Heuristic;
+package com.AStar.heuristic;
+import com.AStar.algorithm.Heuristic;
+
 import java.util.ArrayList;
 
 

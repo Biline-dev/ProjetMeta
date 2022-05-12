@@ -1,4 +1,4 @@
-package Resolution.PSO;
+package com.PSO;
 import java.util.ArrayList;
 
 public class Main {
