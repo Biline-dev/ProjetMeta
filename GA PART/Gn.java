@@ -184,13 +184,7 @@ public class Gn {
 	}
 	
 	//l'algorithme principal
-	public ArrayList<ArrayList<Integer>> application() {
-		//initialisation des variables principales
-		int N = 5; //number of generations
-		int generationSize = 12;
-		double pc = 0.3;
-		double pm = 0.3;
-		int maxIter = 100;
+	public ArrayList<ArrayList<Integer>> application(int N, int generationSize, double pc, double pm, int maxIter) {
 		int iter = 0;
 		
 		//définir les variables qu'on va utiliser dans pp
@@ -266,7 +260,15 @@ public class Gn {
 		ArrayList <Integer> startState = new ArrayList<Integer>(Arrays.asList(2, 8, 3, 1, 6, 4, 7, 0, 5));
 		ArrayList <Integer> goalState = new ArrayList <Integer>(Arrays.asList(1, 2, 3, 8, 0, 4, 7, 6, 5));
 		Gn algo = new Gn(startState, goalState);
-		ArrayList<ArrayList<Integer>> solutions = algo.application(); 
+		
+		//initialisation des variables principales
+		int N = 5; //number of generations
+		int generationSize = 12;
+		double pc = 0.3;
+		double pm = 0.3;
+		int maxIter = 100;
+		//appeler la fonction principale de l'algorithme génétique avec les paramètres définis
+		ArrayList<ArrayList<Integer>> solutions = algo.application(N, generationSize, pc, pm, maxIter); 
 		algo.affichage(solutions);
 		 
 		
