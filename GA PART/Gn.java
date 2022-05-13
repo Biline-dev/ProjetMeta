@@ -20,14 +20,14 @@ public class Gn {
 	//methods
 	
 	//la méthode init permet de construire la population initiale
-	public ArrayList<ArrayList<Integer>> init(int N, int generationSize) {
+	public ArrayList<ArrayList<Integer>> init(int N, int chromosomeSize) {
 		ArrayList<ArrayList<Integer>> generation = new ArrayList <ArrayList<Integer>>();
 		ArrayList <Integer> givenList = new ArrayList <Integer>(Arrays.asList(1, -1, 3, -3));
 		
 		for(int i=0; i<N; i++) {
 			ArrayList <Integer> randomChromosome = new ArrayList <Integer>();
 			Random rand = new Random();
-			for (int j=0; j<generationSize; j++) {
+			for (int j=0; j<chromosomeSize; j++) {
 				int randomElement = givenList.get(rand.nextInt(givenList.size()));
 				randomChromosome.add(randomElement);
 			}
@@ -184,7 +184,7 @@ public class Gn {
 	}
 	
 	//l'algorithme principal
-	public ArrayList<ArrayList<Integer>> application(int N, int generationSize, double pc, double pm, int maxIter) {
+	public ArrayList<ArrayList<Integer>> application(int N, int chromosomeSize, double pc, double pm, int maxIter) {
 		int iter = 0;
 		
 		//définir les variables qu'on va utiliser dans pp
@@ -195,7 +195,7 @@ public class Gn {
 		
 		//pp
 		//construire la population initiale
-		ArrayList<ArrayList<Integer>> currentGeneration = this.init(N, generationSize);
+		ArrayList<ArrayList<Integer>> currentGeneration = this.init(N, chromosomeSize);
 		int bestFitness = 0;
 		
 		while(bestFitness < 9 && iter<maxIter) {
@@ -220,13 +220,12 @@ public class Gn {
 				child = this.mutation(cc.get(0), pm);
 				newGeneration.add(child);
 				j ++;
-				if(j == generationSize - 1) {
+				if(j == chromosomeSize - 1) {
 					i++;
 					j=0;
 				}
 			}
 			currentGeneration = newGeneration;
-			
 			iter ++;
 		}
 		
@@ -262,15 +261,14 @@ public class Gn {
 		Gn algo = new Gn(startState, goalState);
 		
 		//initialisation des variables principales
-		int N = 5; //number of generations
-		int generationSize = 12;
+		int N = 5; //number of chromosomes in each generation
+		int chromosomeSize = 12;
 		double pc = 0.3;
 		double pm = 0.3;
 		int maxIter = 100;
 		//appeler la fonction principale de l'algorithme génétique avec les paramètres définis
-		ArrayList<ArrayList<Integer>> solutions = algo.application(N, generationSize, pc, pm, maxIter); 
+		ArrayList<ArrayList<Integer>> solutions = algo.application(N, chromosomeSize, pc, pm, maxIter); 
 		algo.affichage(solutions);
-		 
 		
 	}	
 	
