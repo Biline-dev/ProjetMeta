@@ -184,7 +184,7 @@ public class Gn {
 	}
 	
 	//l'algorithme principal
-	public ArrayList<ArrayList<Integer>> application(int N, int chromosomeSize, double pc, double pm, int maxIter) {
+	public ResultGA application(int N, int chromosomeSize, double pc, double pm, int maxIter) {
 		int iter = 0;
 		
 		//définir les variables qu'on va utiliser dans pp
@@ -229,11 +229,15 @@ public class Gn {
 			iter ++;
 		}
 		
-		return selected;
+		//récupérer la meilleur solution de la dernière génération
+		ArrayList <String> movementsList = this.bestSolution(selected);
+		
+		//retourner le résultat final
+		 return new ResultGA(iter, bestFitness, movementsList);
 	}
-	
-	//cette méthode permet de retourner la solution à l'interface afin de l'afficher
-	public ArrayList <String> affichage(ArrayList<ArrayList<Integer>> currentGeneration){
+
+	//cette méthode permet de retourner la meilleur séquence de mouvements qui représente la solution
+	public ArrayList <String> bestSolution(ArrayList<ArrayList<Integer>> currentGeneration){
 		ArrayList <Integer> gbest = this.getValid(currentGeneration.get(0));
 		System.out.println(gbest);
 		ArrayList <String> movementsList = new ArrayList <String>();
@@ -245,7 +249,6 @@ public class Gn {
 			case  1 : movementsList.add("RIGHT"); break;
 			}
 		}
-		System.out.println(movementsList);
 		return movementsList;
 	}
 	
@@ -267,8 +270,8 @@ public class Gn {
 		double pm = 0.3;
 		int maxIter = 100;
 		//appeler la fonction principale de l'algorithme génétique avec les paramètres définis
-		ArrayList<ArrayList<Integer>> solutions = algo.application(N, chromosomeSize, pc, pm, maxIter); 
-		algo.affichage(solutions);
+		ResultGA r = algo.application(N, chromosomeSize, pc, pm, maxIter); 
+		r.display();
 		
 	}	
 	
