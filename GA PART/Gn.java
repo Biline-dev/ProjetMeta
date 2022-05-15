@@ -90,7 +90,7 @@ public class Gn {
 	   }
 	
 	
-	//la méthode select permet de sélectionner 2 chromosomes pour le croisement
+	//la méthode select permet de trier la génération selon la fitness
 	public ArrayList<ArrayList<Integer>> select(ArrayList <Integer> fitnessList, ArrayList<ArrayList<Integer>> generation){
 		ArrayList<ArrayList<Integer>> sortedGeneration = new ArrayList<ArrayList<Integer>>();
 		ArrayList <Integer> fitnessSorted = new ArrayList <Integer>();
@@ -180,22 +180,43 @@ public class Gn {
 			   } 
 			   j++;
 		   }
+		   System.out.println(validChild);
 		return validChild;
 	}
+	
+	
+	//cette méthode permet d'optimiser la solution finale
+	public ArrayList <Integer> optimization (ArrayList <Integer> child) {
+		   ArrayList <Integer> optimizedChild = new ArrayList <Integer>(); 
+		   int j = 0;
+		   while(j< child.size()-1) {
+			   if(child.get(j) == -1 * child.get(j+1)) j+= 2;
+			   else {
+				   optimizedChild.add(child.get(j));
+				   j+=1;
+			   }
+		   }
+		   //traitement du dernier élément si la longueur de la liste est impaire
+		   if(j<child.size()) optimizedChild.add(child.get(j));
+		   System.out.println(optimizedChild);
+		   return optimizedChild;   
+		   }
 	
 	//l'algorithme principal
 	public ResultGA application(int N, int chromosomeSize, double pc, double pm, int maxIter) {
 		int iter = 0;
 		
 		//définir les variables qu'on va utiliser dans pp
-		ArrayList<Integer> fitness = new ArrayList <Integer>();
+		ArrayList<Integer> fitnessList = new ArrayList <Integer>();
 		ArrayList<ArrayList<Integer>> selected = new ArrayList<ArrayList<Integer>> ();
 		ArrayList<ArrayList<Integer>> cc = new ArrayList<ArrayList<Integer>> ();
 		ArrayList<Integer> child = new ArrayList<Integer> ();
+		ArrayList<ArrayList<Integer>> bestGeneration = new ArrayList<ArrayList<Integer>>(); ;
 		
 		//pp
 		//construire la population initiale
 		ArrayList<ArrayList<Integer>> currentGeneration = this.init(N, chromosomeSize);
+		int currentFitness = 0;
 		int bestFitness = 0;
 		
 		while(bestFitness < 9 && iter<maxIter) {
@@ -204,11 +225,25 @@ public class Gn {
 			int j = 0;
 			
 			//calculer la fitness de la nouvelle génération afin de tester le test d'arret
-			fitness = this.fitness(currentGeneration);
-			bestFitness = Collections.max(fitness);
-			selected = this.select(fitness, currentGeneration);
-			System.out.println("     best current fitness = " + bestFitness);
-			System.out.println("     selected generation = "+selected);
+			fitnessList = this.fitness(currentGeneration);
+			currentFitness = Collections.max(fitnessList);
+			selected = this.select(fitnessList, currentGeneration);
+			System.out.println("     current fitness = " + currentFitness);
+			System.out.println("     selected generation = " + selected);
+			if(currentFitness>bestFitness) {
+				bestGeneration = new ArrayList<ArrayList<Integer>>();
+				bestFitness = currentFitness;
+				System.out.println("best generation = "+selected);
+				for (int z = 0 ; z<selected.size();z++) {
+					ArrayList <Integer> a = new ArrayList<Integer>();
+					ArrayList <Integer> b = selected.get(z);
+					for(int k = 0; k<b.size(); k++) {
+						a.add(b.get(k));
+					}
+					bestGeneration.add(a);
+				}
+				System.out.println("best generation = "+bestGeneration);
+			}
 			if(bestFitness == 9) {
 				break;
 			}
@@ -217,7 +252,12 @@ public class Gn {
 			ArrayList<ArrayList<Integer>> newGeneration = new ArrayList<ArrayList<Integer>>();
 			while(newGeneration.size()<N && i<selected.size() && j<selected.size()) {
 				cc = this.croisement(selected.get(i), selected.get(j), pc);
-				child = this.mutation(cc.get(0), pm);
+				ArrayList <Integer> CCC = new ArrayList <Integer>(); 
+				ArrayList <Integer> z = cc.get(0);
+				for(int m = 0; m<z.size();m++) {
+					CCC.add(z.get(m));
+				}
+				child = this.mutation(CCC, pm);
 				newGeneration.add(child);
 				j ++;
 				if(j == chromosomeSize - 1) {
@@ -230,7 +270,8 @@ public class Gn {
 		}
 		
 		//récupérer la meilleur solution de la dernière génération
-		ArrayList <String> movementsList = this.bestSolution(selected);
+		System.out.println("best generation = "+bestGeneration);
+		ArrayList <String> movementsList = this.bestSolution(bestGeneration);
 		
 		//retourner le résultat final
 		 return new ResultGA(iter, bestFitness, movementsList);
@@ -238,8 +279,11 @@ public class Gn {
 
 	//cette méthode permet de retourner la meilleur séquence de mouvements qui représente la solution
 	public ArrayList <String> bestSolution(ArrayList<ArrayList<Integer>> currentGeneration){
+		//ne garder que les mouvements valides de la solution
+		System.out.println(currentGeneration.get(0));
 		ArrayList <Integer> gbest = this.getValid(currentGeneration.get(0));
-		System.out.println(gbest);
+		//supprimer les mouvements séquentiels opposés
+		gbest = this.optimization(gbest);
 		ArrayList <String> movementsList = new ArrayList <String>();
 		for(int i = 0; i<gbest.size(); i++) {
 			switch(gbest.get(i)) {
@@ -265,7 +309,7 @@ public class Gn {
 		
 		//initialisation des variables principales
 		int N = 5; //number of chromosomes in each generation
-		int chromosomeSize = 12;
+		int chromosomeSize = 20;
 		double pc = 0.3;
 		double pm = 0.3;
 		int maxIter = 100;
