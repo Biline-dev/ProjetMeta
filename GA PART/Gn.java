@@ -180,7 +180,6 @@ public class Gn {
 			   } 
 			   j++;
 		   }
-		   System.out.println(validChild);
 		return validChild;
 	}
 	
@@ -198,7 +197,6 @@ public class Gn {
 		   }
 		   //traitement du dernier élément si la longueur de la liste est impaire
 		   if(j<child.size()) optimizedChild.add(child.get(j));
-		   System.out.println(optimizedChild);
 		   return optimizedChild;   
 		   }
 	
@@ -233,7 +231,6 @@ public class Gn {
 			if(currentFitness>bestFitness) {
 				bestGeneration = new ArrayList<ArrayList<Integer>>();
 				bestFitness = currentFitness;
-				System.out.println("best generation = "+selected);
 				for (int z = 0 ; z<selected.size();z++) {
 					ArrayList <Integer> a = new ArrayList<Integer>();
 					ArrayList <Integer> b = selected.get(z);
@@ -242,7 +239,6 @@ public class Gn {
 					}
 					bestGeneration.add(a);
 				}
-				System.out.println("best generation = "+bestGeneration);
 			}
 			if(bestFitness == 9) {
 				break;
@@ -280,7 +276,6 @@ public class Gn {
 	//cette méthode permet de retourner la meilleur séquence de mouvements qui représente la solution
 	public ArrayList <String> bestSolution(ArrayList<ArrayList<Integer>> currentGeneration){
 		//ne garder que les mouvements valides de la solution
-		System.out.println(currentGeneration.get(0));
 		ArrayList <Integer> gbest = this.getValid(currentGeneration.get(0));
 		//supprimer les mouvements séquentiels opposés
 		gbest = this.optimization(gbest);
@@ -309,7 +304,7 @@ public class Gn {
 		
 		//initialisation des variables principales
 		int N = 5; //number of chromosomes in each generation
-		int chromosomeSize = 20;
+		int chromosomeSize = 12;
 		double pc = 0.3;
 		double pm = 0.3;
 		int maxIter = 100;
